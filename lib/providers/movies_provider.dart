@@ -7,7 +7,7 @@ import 'package:peliculas/models/search_movies_response.dart';
 class MoviesProvider extends ChangeNotifier {
   final String _apiKey = '5e281f23c6fe3b7b7b2405e3c1bb2c0c';
   final String _baseUrl = 'api.themoviedb.org';
-  final String _languaje = 'es-ES';
+  final String _languaje = 'en-US';
 
   List<Movie> onDisplayMovies = [];
   List<Movie> popularMovies = [];
@@ -24,15 +24,16 @@ class MoviesProvider extends ChangeNotifier {
   Future<String> _getJsonData(String endpoint, [int page = 1]) async {
     final url = Uri.https(_baseUrl, endpoint,
         {'api_key': _apiKey, 'languaje': _languaje, 'page': '$page'});
-
+    print(url);
     // Await the http get response, then decode the json-formatted response.
     final response = await http.get(url);
     return response.body;
+    
   }
 
   getOnDisplayMovies() async {
-    final jsonData = await _getJsonData('3/movie/now_playing');
-
+    final jsonData = await _getJsonData('/3/movie/now_playing');
+ 
     final nowPlayingResponse = NowPlayingResponse.fromRawJson(jsonData),
 
         // ignore: unused_local_variable
@@ -43,7 +44,7 @@ class MoviesProvider extends ChangeNotifier {
 
   getPopularMovies() async {
     _popularPage++;
-    final jsonData = await _getJsonData('3/movie/now_popular', _popularPage);
+    final jsonData = await _getJsonData('/3/movie/popular', _popularPage);
 
     final popularResponse = PopularResponse.fromRawJson(jsonData),
 

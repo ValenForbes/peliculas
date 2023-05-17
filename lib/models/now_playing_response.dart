@@ -22,7 +22,7 @@ class NowPlayingResponse {
     int totalPages;
     int totalResults;
 
-    factory NowPlayingResponse.fromRawJson(String str) => NowPlayingResponse.fromJson(json.decode(str));
+     factory NowPlayingResponse.fromRawJson(String str) => NowPlayingResponse.fromJson(json.decode(str));
 
    
 
