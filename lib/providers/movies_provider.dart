@@ -24,32 +24,29 @@ class MoviesProvider extends ChangeNotifier {
   Future<String> _getJsonData(String endpoint, [int page = 1]) async {
     final url = Uri.https(_baseUrl, endpoint,
         {'api_key': _apiKey, 'languaje': _languaje, 'page': '$page'});
-    print(url);
+    
     // Await the http get response, then decode the json-formatted response.
     final response = await http.get(url);
     return response.body;
-    
   }
 
-  getOnDisplayMovies() async {
-    final jsonData = await _getJsonData('/3/movie/now_playing');
- 
-    final nowPlayingResponse = NowPlayingResponse.fromRawJson(jsonData),
+  void getOnDisplayMovies() async {
+    final jsonData = await _getJsonData('3/movie/now_playing');
 
-        // ignore: unused_local_variable
-        onDisplayMovies = nowPlayingResponse.results;
+    final nowPlayingResponse = NowPlayingResponse.fromRawJson(jsonData);
+
+    onDisplayMovies = nowPlayingResponse.results;
 
     notifyListeners();
   }
 
-  getPopularMovies() async {
+   void getPopularMovies() async {
     _popularPage++;
-    final jsonData = await _getJsonData('/3/movie/popular', _popularPage);
+    final jsonData = await _getJsonData('3/movie/popular', _popularPage);
 
-    final popularResponse = PopularResponse.fromRawJson(jsonData),
+    final popularResponse = PopularResponse.fromRawJson(jsonData);
 
-        // ignore: unused_local_variable
-        onDisplayMovies = [...popularMovies, ...popularResponse.results];
+    popularMovies = [...popularMovies, ...popularResponse.results];
 
     notifyListeners();
   }

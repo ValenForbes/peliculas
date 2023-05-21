@@ -33,6 +33,8 @@ class Movie {
   double voteAverage;
   int voteCount;
 
+  String? heroId;
+
   get fullPosterImg {
     if (posterPath != null)
       // ignore: curly_braces_in_flow_control_structures, unnecessary_brace_in_string_interps
